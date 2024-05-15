@@ -15,7 +15,7 @@ int main()
 {
     //experiment01();
     experiment02();
-    cout << "Hello World!\n";
+    cout << "\nAll done!\n";
 }
 
 // =============================================================
