@@ -6,7 +6,7 @@ template <class T>
 struct BST
 {
     //------------------------------------------------------------------------------
-    //Version 0. Intentionally, all fields and functions made public for easy access
+    // Version 0. Intentionally, all fields and functions made public for easy access
     // Implementing a simple Binary Search Tree (BST) with basic operations
     // insert, search, print, delete, etc.
     //------------------------------------------------------------------------------
@@ -116,5 +116,69 @@ struct BST
         }
         return nullptr;
     }
+
+    //Delete a node from the tree
+    bool remove(T key) {
+        //Is the tree empty?
+        if (root == nullptr) return false;
+
+        //Find the node to be deleted
+        Node<T>* current = search(key);
+        if (current == nullptr) return false;
+
+        //Case 1: Node has no children
+        if (current->left == nullptr && current->right == nullptr) {
+            //Adjust the parent's left or right pointer
+            if (current->parent->left == current)
+                current->parent->left = nullptr;
+            else
+                current->parent->right = nullptr;
+            //Delete the node
+            delete current;
+            return true;
+        }
+
+        //Case 2: Node has only one child
+        if (current->left  == nullptr && current->right != nullptr || 
+            current->right == nullptr && current->left  != nullptr) {
+            //Set the parent's left or right pointer to the child
+            Node<T>* child = current->left == nullptr ? current->right : current->left;
+            //Adjust the parent's left or right pointer
+            if (current->parent->left == current)
+                current->parent->left = child;
+            else
+                current->parent->right = child;
+            //Delete the node
+            delete current; 
+            return true;
+        }
+
+        //Case 3: Node has two children - Apply Hiddard's Algorithm 
+        //Find the Rightmost node of Left Subtree.
+        Node<T>* successor = current->left;
+
+        while (successor->right != nullptr)
+            successor = successor->right;
+
+        //Copy the data of the successor to the current node
+        current->data = successor->data;
+
+        //Adjust the succesor's parent's left or right pointer
+        if (successor->parent->left == successor)
+            successor->parent->left = successor->left;
+        else
+            successor->parent->right = successor->left;
+        
+        
+        //If needed, adjust the succesor's left child to point to the successor's parent 
+        if (successor->left != nullptr) { successor->left->parent = successor->parent; }
+        
+        //Delete the successor node
+        delete successor;
+        return true;    
+    
+    
+    }
+
 };
 

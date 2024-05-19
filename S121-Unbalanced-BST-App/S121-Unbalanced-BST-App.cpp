@@ -36,10 +36,10 @@ void experiment02()
     t.postorder();
     t.rowWise();
 
-    //Testing search method
+    //Testing the search method
     do
     {
-        cout << "Enter a key [-1 to end]: ";
+        cout << "\nEnter a key [-1 to end]: ";
         int key;
         cin >> key;
         if (key == -1) break;
@@ -47,8 +47,15 @@ void experiment02()
         if (n == nullptr)
             cout << "Key Not found!\n";
         else
-            cout << "Key not found! - " << *n << endl;
+            cout << "Key found! => " << *n << endl;
     } while (true);
+
+    //Testing the remove method
+    int key = 40;
+    cout << "\nRemoving " << key << endl;
+    t.remove(key);
+    t.rowWise();
+    t.preorder();
 }
 
 
