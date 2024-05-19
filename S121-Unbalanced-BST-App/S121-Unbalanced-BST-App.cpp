@@ -21,6 +21,7 @@ int main()
 // =============================================================
 void experiment02()
 {
+    //Testing BST<T> class
     BST<int> t;
     t.insert(40);
     t.insert(20);
@@ -33,8 +34,21 @@ void experiment02()
 
     t.preorder();
     t.postorder();
-
     t.rowWise();
+
+    //Testing search method
+    do
+    {
+        cout << "Enter a key [-1 to end]: ";
+        int key;
+        cin >> key;
+        if (key == -1) break;
+        Node<int> * n = t.search(key);
+        if (n == nullptr)
+            cout << "Key Not found!\n";
+        else
+            cout << "Key not found! - " << *n << endl;
+    } while (true);
 }
 
 
@@ -43,6 +57,7 @@ void experiment02()
 
 void experiment01()
 {
+    //Testing Node<T> class
     Node<int>* n1 = new Node<int>(25);
     cout << "n1 " << *n1 << endl;
 
