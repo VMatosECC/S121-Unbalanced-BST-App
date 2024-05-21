@@ -5,8 +5,20 @@
 template <class T>
 struct BST
 {
+private:
+    void destroyTree(Node<T>* p) {
+        //use a postorder approach to delete the nodes
+        if (p == nullptr) return;
+        destroyTree(p->left);
+        destroyTree(p->right);
+        cout << "+++ Deleting: " << *p << endl;
+        delete p;
+       
+    }
+
+public:
     //------------------------------------------------------------------------------
-    // Version 0. Intentionally, all fields and functions made public for easy access
+    // Version 0. Intentionally, most fields and functions made public for easy access
     // Implementing a simple Binary Search Tree (BST) with basic operations
     // insert, search, print, delete, etc.
     //------------------------------------------------------------------------------
@@ -17,10 +29,12 @@ struct BST
     }
 
     ~BST() {
-        //TODO - must remove dynamically created Node<T> containers!
+        //No zombie nodes left behind!
+        destroyTree(root);
     }
 
-    void insert(T newData)
+    // Add a new key to the tree -----------------------------------------------------
+    void insert(T newData) 
     {
         //Create a new node
         Node<T>* newNode = new Node<T>(newData);
@@ -55,7 +69,7 @@ struct BST
 
     }
 
-    //Display the tree in PreOrder Traversal
+    //Display the tree in PreOrder Traversal    --------------------------------------
     void preorder(Node<T>* p) {
         if (p == nullptr) return;
         cout << *p << endl;
@@ -69,7 +83,7 @@ struct BST
         preorder(root);
     }
 
-    //Display the tree in PostOrder Traversal
+    //Display the tree in PostOrder Traversal   --------------------------------------      
     void postorder(Node<T>* p) {
         if (p == nullptr) return;
         postorder(p->left);
@@ -83,7 +97,7 @@ struct BST
         postorder(root);
     }
 
-    //Display the tree in Breath-First Search (BFS) or Row-Wise Traversal
+    //Display the tree in Breath-First Search (BFS) or Row-Wise Traversal ----------------
     void rowWise() {
         cout << "\nRow-Wise Traversal (BFS)\n";
 
@@ -103,12 +117,15 @@ struct BST
         }
     }
 
-    //Search for a key in the tree
+    //Search for a key in the tree  ---------------------------------------------
     Node<T>* search(T key) {
         Node<T>* current = root;
+
         while (current != nullptr) {
+            
             if (current->data == key) 
                 return current;
+
             if (current->data > key)
                 current = current->left;
             else
@@ -117,7 +134,7 @@ struct BST
         return nullptr;
     }
 
-    //Delete a node from the tree
+    //Delete a node from the tree  ---------------------------------------------
     bool remove(T key) {
         //Is the tree empty?
         if (root == nullptr) return false;
